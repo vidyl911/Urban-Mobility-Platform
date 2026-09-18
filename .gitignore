@@ -1,0 +1,16 @@
+# Raw datasets
+data/raw/
+
+# Generated data
+data/bronze/
+data/silver/
+data/gold/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
