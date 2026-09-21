@@ -45,7 +45,7 @@ print(df["passaggi_24h"].describe())
 
 
 # ============================================================
-# SILVER TRANSFORMATION
+# SILVER TRANSFORMATION [RUN AFTER INSPECTION]
 # ============================================================
 
 

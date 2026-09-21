@@ -57,7 +57,7 @@ print(df["office"].value_counts(dropna=False).head(30))
 
 
 # ============================================================
-# SILVER TRANSFORMATION
+# SILVER TRANSFORMATION [RUN AFTER INSPECTION]
 # ============================================================
 
 # ------------------------------------------------------------
