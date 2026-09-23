@@ -5,6 +5,7 @@ from pyspark.sql import functions as F
 spark = (
     SparkSession.builder
     .appName("UrbanMobility-Roads-Gold")
+    .config("spark.hadoop.fs.permissions.umask-mode", "000")
     .getOrCreate()
 )
 
