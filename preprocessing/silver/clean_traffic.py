@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 # ============================================================
 # Paths
@@ -82,7 +83,7 @@ df["varco"] = df["varco"].replace(
 df["data"] = pd.to_datetime(
     df["data"],
     errors="coerce"
-)
+).dt.floor("us")
 
 
 # ------------------------------------------------------------
@@ -148,10 +149,27 @@ os.makedirs(
     exist_ok=True
 )
 
-df.to_parquet(
-    OUTPUT_PATH,
-    index=False,
-    engine="pyarrow"
+table = pa.Table.from_pandas(
+    df,
+    preserve_index=False
+)
+
+date_index = table.schema.get_field_index("data")
+
+if date_index != -1:
+    date_array = table["data"].cast(
+        pa.timestamp("us")
+    )
+
+    table = table.set_column(
+        date_index,
+        "data",
+        date_array
+    )
+
+pq.write_table(
+    table,
+    OUTPUT_PATH
 )
 
 print(

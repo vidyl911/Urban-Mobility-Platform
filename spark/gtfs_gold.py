@@ -5,6 +5,7 @@ from pyspark.sql import functions as F
 spark = (
     SparkSession.builder
     .appName("UrbanMobility-GTFS-Gold")
+    .config("spark.hadoop.fs.permissions.umask-mode", "000")
     .getOrCreate()
 )
 
@@ -104,10 +105,11 @@ gold_transit = (
 print("\nGold transit schema:")
 gold_transit.printSchema()
 
+print("Gold transit count:", gold_transit.count())
 gold_transit.show(10, truncate=False)
 
 
-OUTPUT_PATH = "data/gold/transit"
+OUTPUT_PATH = "data/gold/gtfs"
 
 (
     gold_transit.write

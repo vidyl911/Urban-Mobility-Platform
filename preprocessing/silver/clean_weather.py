@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 # ============================================================
 # Paths
@@ -75,7 +76,7 @@ df = df.drop_duplicates(
 df["time"] = pd.to_datetime(
     df["time"],
     errors="coerce"
-)
+).dt.floor("us")
 
 
 # ------------------------------------------------------------
@@ -202,10 +203,27 @@ os.makedirs(
     exist_ok=True
 )
 
-df.to_parquet(
-    OUTPUT_PATH,
-    index=False,
-    engine="pyarrow"
+table = pa.Table.from_pandas(
+    df,
+    preserve_index=False
+)
+
+time_index = table.schema.get_field_index("time")
+
+if time_index != -1:
+    time_array = table["time"].cast(
+        pa.timestamp("us")
+    )
+
+    table = table.set_column(
+        time_index,
+        "time",
+        time_array
+    )
+
+pq.write_table(
+    table,
+    OUTPUT_PATH
 )
 
 print(
