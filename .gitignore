@@ -11,6 +11,26 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml
+
+# ML / experiment outputs
+mlruns/
+mlartifacts/
+*.pkl
+*.joblib
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
