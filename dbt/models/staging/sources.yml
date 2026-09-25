@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: mobility
+    schema: mobility
+    description: "Gold-layer urban mobility datasets loaded into PostgreSQL."
+
+    tables:
+      - name: roads
+      - name: gtfs
+      - name: weather
+      - name: pois
+      - name: traffic
